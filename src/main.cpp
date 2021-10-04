@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {
 
-    //Crear archivo .csv delimitado por comos
+    //Crear archivo .csv delimitado por comas
     fstream myFile;
     myFile.open("Reporte.csv", ios::out);
 
@@ -141,6 +141,7 @@ int main()
                             montoAPagar = montoPorHora * horasLaboradas;
 
                             datosSalida = idEmpleadoPersonas + "," + nombre + "," + apellido + "," + "Director" + "," + to_string(montoAPagar);
+                            cout <<datosSalida<<endl;
                         }
                     }
                     ifsHorasTrabajadas.close();
@@ -153,7 +154,7 @@ int main()
         }
 
         myFile << datosSalida << endl;
-        // arbol->AgregarNodo(idEmpleadoPersonas, idEmpleadoPersonas, idSupervisor);
+        arbol->AgregarNodo(idEmpleadoPersonas, idEmpleadoPersonas, idSupervisor);
         datosSalida = "";
     }
     myFile.close();
@@ -161,7 +162,7 @@ int main()
     ifsPersonas.close();
 
     std::cout << *arbol;
-    //  delete arbol;
+    delete arbol;
 
     return 0;
 }
