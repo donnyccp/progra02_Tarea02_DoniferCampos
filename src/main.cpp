@@ -46,8 +46,7 @@ int main()
     float montoAPagar{0.0};
     string nombreEncargado{""};
 
-    Arbol *arbol;
-    new Arbol();
+    Arbol *arbol= new Arbol();
 
     while (std::getline(ifsPersonas, lineaPersonas))
     {
