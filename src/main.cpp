@@ -44,9 +44,12 @@ int main()
     string lineaEmpleado{""};
 
     float montoAPagar{0.0};
-    string nombreEncargado{""};
+    float subtotal{0.0};
+    float impuestos{0.0};
+    float total{0.0};
 
-    Arbol *arbol= new Arbol();
+    //Crear arbol
+    Arbol *arbol = new Arbol();
 
     while (std::getline(ifsPersonas, lineaPersonas))
     {
@@ -86,6 +89,7 @@ int main()
                     {
 
                         montoAPagar = pagoMensualBruto - pagoMensualBruto * 0.07;
+                        impuestos = impuestos + pagoMensualBruto * 0.07;
 
                         datosSalida = idEmpleadoPersonas + "," + nombre + "," + apellido + "," + "Director" + "," + to_string(montoAPagar);
                     }
@@ -113,37 +117,123 @@ int main()
                         if (idEmpleadoPersonas == idEmpleadoNomina)
                         {
 
+                            //Monto neto a pagar
                             montoAPagar = pagoMensualBruto - pagoMensualBruto * 0.07;
+                            //Calculo impuestos
+                            impuestos = impuestos + pagoMensualBruto * 0.07;
 
-                            datosSalida = idEmpleadoPersonas + "," + nombre + "," + apellido + "," + "Director" + "," + to_string(montoAPagar);
+                            //Buscar nombre de supervisor
+
+                            std::ifstream ifsNombreDeSupervisor("Personas.txt", std::ifstream::in);
+
+                            if (!ifsNombreDeSupervisor.is_open())
+                            {
+                                std::cerr << "Error leyendo archivo Personas.txt" << std::endl;
+                                return -1;
+                            }
+                            string lineaNombreSupervisor{""};
+                            string nombreCompletoSupervisor{""};
+                            int idEmpleadoSupervisor{0};
+                            string correoSupervisor{""};
+                            int tipoEmpleadoSupervisor{0};
+                            string nombreSupervisor{""};
+                            string apellidoSupervisor{""};
+
+                            while (std::getline(ifsNombreDeSupervisor, lineaNombreSupervisor) && idEmpleadoSupervisor != idSupervisor)
+                            {
+
+                                try
+                                {
+                                    // Procesamos la línea
+                                    std::istringstream stream4(lineaNombreSupervisor);
+                                    idEmpleadoSupervisor = 0;
+                                    nombreSupervisor = "";
+                                    apellidoSupervisor = "";
+                                    correoSupervisor = "";
+                                    tipoEmpleadoSupervisor = 0;
+
+                                    stream4 >> idEmpleadoSupervisor >> nombreSupervisor >> apellidoSupervisor >> correoSupervisor >> tipoEmpleadoSupervisor >> idEmpleadoSupervisor;
+
+                                    datosSalida = idEmpleadoPersonas + "," + nombre + "," + apellido + "," + nombreSupervisor + "," + apellidoSupervisor + "," + to_string(montoAPagar);
+                                }
+                                catch (string &excepcion)
+                                {
+                                    cerr << excepcion << endl;
+                                }
+                            }
+
+                            ifsNombreDeSupervisor.close();
                         }
                     }
                     ifsNomina.close();
                 }
-                else if (tipoEmpleado == 2)
+                else
                 {
-                    std::ifstream ifsHorasTrabajadas("HorasTrabajadas.txt", std::ifstream::in);
-                    /* if (!ifsHorasTrabajadas.is_open())
+                    if (tipoEmpleado == 2)
+                    {
+                        std::ifstream ifsHorasTrabajadas("HorasTrabajadas.txt", std::ifstream::in);
+                        /* if (!ifsHorasTrabajadas.is_open())
                     {
                         std::cerr << "Error leyendo archivo HorasTrabajadas.txt" << std::endl;
                         return -1;
                     }*/
-                    while (std::getline(ifsHorasTrabajadas, lineaHorasTrabajadas) && idEmpleadoPersonas != idEmpleadoHorasTrabajadas)
-                    {
-                        std::istringstream stream3(lineaHorasTrabajadas);
-                        stream3 >> idEmpleadoHorasTrabajadas;
-                        stream3 >> montoPorHora;
-                        stream3 >> horasLaboradas;
-                        if (idEmpleadoPersonas == idEmpleadoHorasTrabajadas)
+                        while (std::getline(ifsHorasTrabajadas, lineaHorasTrabajadas) && idEmpleadoPersonas != idEmpleadoHorasTrabajadas)
                         {
+                            std::istringstream stream3(lineaHorasTrabajadas);
+                            stream3 >> idEmpleadoHorasTrabajadas;
+                            stream3 >> montoPorHora;
+                            stream3 >> horasLaboradas;
+                            if (idEmpleadoPersonas == idEmpleadoHorasTrabajadas)
+                            {
 
-                            montoAPagar = montoPorHora * horasLaboradas;
+                                //Monto neto a pagar
+                                montoAPagar = montoPorHora * horasLaboradas;
 
-                            datosSalida = idEmpleadoPersonas + "," + nombre + "," + apellido + "," + "Director" + "," + to_string(montoAPagar);
-                            cout <<datosSalida<<endl;
+                                //Buscar nombre de supervisor
+
+                                std::ifstream ifsNombreDeSupervisor("Personas.txt", std::ifstream::in);
+
+                                if (!ifsNombreDeSupervisor.is_open())
+                                {
+                                    std::cerr << "Error leyendo archivo Personas.txt" << std::endl;
+                                    return -1;
+                                }
+                                string lineaNombreSupervisor{""};
+                                string nombreCompletoSupervisor{""};
+                                int idEmpleadoSupervisor{0};
+                                string correoSupervisor{""};
+                                int tipoEmpleadoSupervisor{0};
+                                string nombreSupervisor{""};
+                                string apellidoSupervisor{""};
+
+                                while (std::getline(ifsNombreDeSupervisor, lineaNombreSupervisor) && idEmpleadoSupervisor != idSupervisor)
+                                {
+
+                                    try
+                                    {
+                                        // Procesamos la línea
+                                        std::istringstream stream4(lineaNombreSupervisor);
+                                        idEmpleadoSupervisor = 0;
+                                        nombreSupervisor = "";
+                                        apellidoSupervisor = "";
+                                        correoSupervisor = "";
+                                        tipoEmpleadoSupervisor = 0;
+
+                                        stream4 >> idEmpleadoSupervisor >> nombreSupervisor >> apellidoSupervisor >> correoSupervisor >> tipoEmpleadoSupervisor >> idEmpleadoSupervisor;
+
+                                        datosSalida = idEmpleadoPersonas + "," + nombre + "," + apellido + "," + nombreSupervisor + "," + apellidoSupervisor + "," + to_string(montoAPagar);
+                                    }
+                                    catch (string &excepcion)
+                                    {
+                                        cerr << excepcion << endl;
+                                    }
+                                }
+
+                                ifsNombreDeSupervisor.close();
+                            }
                         }
+                        ifsHorasTrabajadas.close();
                     }
-                    ifsHorasTrabajadas.close();
                 }
             }
         }
@@ -153,9 +243,17 @@ int main()
         }
 
         myFile << datosSalida << endl;
+        //Calculo subtotal y totales
+        subtotal = subtotal + montoAPagar;
+        total = subtotal + impuestos;
+
         arbol->AgregarNodo(idEmpleadoPersonas, idEmpleadoPersonas, idSupervisor);
         datosSalida = "";
     }
+    myFile << "Subtotal:" << subtotal << endl;
+    myFile << "Impuestos:" << impuestos << endl;
+    myFile << "Total:" << total << endl;
+
     myFile.close();
 
     ifsPersonas.close();
