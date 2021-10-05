@@ -38,6 +38,7 @@ int main()
     Arbol *arbol = new Arbol();
 
     Planilla planillita;
+    
 
     //Abrir archivo personas
     std::ifstream ifsPersonas("Personas.txt", std::ifstream::in);
@@ -82,7 +83,7 @@ int main()
     ifsPersonas.close();
 
     //Imprimir arbol relacion empleado y surpervisor
-    std::cout << *arbol;
+   std::cout << *arbol;
     delete arbol;
 
     return 0;

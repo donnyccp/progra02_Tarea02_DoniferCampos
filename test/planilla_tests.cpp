@@ -1,6 +1,10 @@
 #include <gtest/gtest.h>
 #include <string>
+#include <iostream>
 #include <sstream>
+#include <fstream>
+using namespace std;
+
 
 #include "../src/planilla.h"
 namespace
@@ -9,7 +13,8 @@ namespace
      TEST(PlanillaTests, Test_calcularPlanillaPago) {
      
         Planilla planilla;
-        std::string actual = planilla.calcularPlanillaPago("1 Alberta Parra alberta_parra@biz.com 1 ");
+        std::string linea="1 Alberta Parra alberta_parra@biz.com 1 ";
+        std::string actual = planilla.calcularPlanillaPago(linea);       
         EXPECT_EQ("1 Alberta Parra No Aplica 4278.911621 0 322.068604", actual);
      }
        
