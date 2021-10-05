@@ -49,17 +49,23 @@ int main()
     while (std::getline(ifsPersonas, lineaPersonas))
     {
 
+        datosSalida = "";
+        apellidoSupervisor="";
+        idEmpleadoPersonas=0;
+        impuestosEmpleado=0.0;
+        montoAPagarEmpleado=0.0;
         datosSalida = planillita.calcularPlanillaPago(lineaPersonas);
-        cout<<datosSalida<<endl;
-        //  std::ifstream ifsDatos(datosSalida, std::ifstream::in);
-        std::istringstream stream(datosSalida);
-        stream >> idEmpleadoPersonas >> nombre >> apellido >> nombreSupervisor >> apellidoSupervisor >> montoAPagarEmpleado >> idEmpleadoPersonas >> idSupervisor >> impuestosEmpleado;
+       
+        std::istringstream ss(datosSalida);
+        ss >> idEmpleadoPersonas >> nombre >> apellido >> nombreSupervisor >> apellidoSupervisor >> montoAPagarEmpleado >> idEmpleadoPersonas >> idSupervisor >> impuestosEmpleado;
+        
 
         //Calculo subtotal y totales
         subtotal = subtotal + montoAPagarEmpleado;
         impuestos = impuestos + impuestosEmpleado;
         total = subtotal + impuestos;
         myFile << nombre << "," << apellido << "," << nombreSupervisor << "," << apellidoSupervisor << "," << montoAPagarEmpleado << endl;
+        
         arbol->AgregarNodo(idEmpleadoPersonas, idEmpleadoPersonas, idSupervisor);
 
         datosSalida = "";

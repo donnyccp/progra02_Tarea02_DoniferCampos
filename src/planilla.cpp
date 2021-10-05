@@ -53,7 +53,7 @@ string Planilla::calcularPlanillaPago(string linea)
             // Revisar si es  el director
 
             std::ifstream ifsNomina("Nomina.txt", std::ifstream::in);
-           /* if (!ifsNomina.is_open())
+            /* if (!ifsNomina.is_open())
             {
                 std::cerr << "Error leyendo archivo Nomina.txt" << std::endl;
                 return -1;
@@ -72,24 +72,24 @@ string Planilla::calcularPlanillaPago(string linea)
 
                     montoAPagarPlanilla = pagoMensualBruto - pagoMensualBruto * 0.07;
                     impuestosPlanilla = pagoMensualBruto * 0.07;
+                    datosSalida = "";
 
-                    datosSalida = idEmpleadoPersonas + " " + nombre + " " + apellido + " " + "No"+" "+"Aplica"+ " " + to_string(montoAPagarPlanilla)+" "+to_string(idEmpleadoPersonas)+" "+to_string(idSupervisor)+" "+to_string(impuestosPlanilla);
+                    datosSalida = to_string(idEmpleadoPersonas) + " " + nombre + " " + apellido + " " + "No" + " " + "Aplica" + " " + to_string(montoAPagarPlanilla) + " " + to_string(idEmpleadoPersonas) + " " + to_string(idSupervisor) + " " + to_string(impuestosPlanilla);
                 }
             }
             ifsNomina.close();
-           
         }
         else
         {
             if (tipoEmpleado == 1)
             {
-                calcularPagoPorNomina(idEmpleadoPersonas, idSupervisor);
+                calcularPagoPorNomina(idEmpleadoPersonas, idSupervisor, nombre, apellido);
             }
             else
             {
                 if (tipoEmpleado == 2)
                 {
-                    calcularPagoPorHorasTrabajadas(idEmpleadoPersonas, idSupervisor);
+                    calcularPagoPorHorasTrabajadas(idEmpleadoPersonas, idSupervisor, nombre, apellido);
                 }
             }
         }
@@ -98,17 +98,19 @@ string Planilla::calcularPlanillaPago(string linea)
     {
         cerr << excepcion << endl;
     }
-     return resultado = datosSalida;
+    return resultado = datosSalida;
 }
 
-string Planilla::calcularPagoPorNomina(int idE, int idS)
+string Planilla::calcularPagoPorNomina(int idE, int idS, string nombreE, string apellidoE)
 {
     idEmpleadoPersonas = idE;
-    idSupervisor=idS;
+    idSupervisor = idS;
+    nombre=nombreE;
+    apellido=apellidoE;
 
     std::ifstream ifsNomina("Nomina.txt", std::ifstream::in);
 
-   /* if (!ifsNomina.is_open())
+    /* if (!ifsNomina.is_open())
     {
         std::cerr << "Error leyendo archivo Nomina.txt" << std::endl;
         return -1;
@@ -131,7 +133,7 @@ string Planilla::calcularPagoPorNomina(int idE, int idS)
 
             std::ifstream ifsNombreDeSupervisor("Personas.txt", std::ifstream::in);
 
-          /*  if (!ifsNombreDeSupervisor.is_open())
+            /*  if (!ifsNombreDeSupervisor.is_open())
             {
                 std::cerr << "Error leyendo archivo Personas.txt" << std::endl;
                 return -1;
@@ -158,29 +160,29 @@ string Planilla::calcularPagoPorNomina(int idE, int idS)
                     tipoEmpleadoSupervisor = 0;
 
                     stream4 >> idEmpleadoSupervisor >> nombreSupervisor >> apellidoSupervisor >> correoSupervisor >> tipoEmpleadoSupervisor >> idEmpleadoSupervisor;
-
-                    datosSalida = idEmpleadoPersonas + " " + nombre + " " + apellido + " " + nombreSupervisor + " " + apellidoSupervisor + " " + to_string(montoAPagarPlanilla)+" "+to_string(idEmpleadoPersonas)+" "+to_string(idSupervisor)+" "+to_string(impuestosPlanilla);
+                    datosSalida = "";
+                    datosSalida = to_string(idEmpleadoPersonas) + " " + nombre + " " + apellido + " " + nombreSupervisor + " " + apellidoSupervisor + " " + to_string(montoAPagarPlanilla) + " " + to_string(idEmpleadoPersonas) + " " + to_string(idSupervisor) + " " + to_string(impuestosPlanilla);
                 }
                 catch (string &excepcion)
                 {
                     cerr << excepcion << endl;
                 }
             }
-            
 
             ifsNombreDeSupervisor.close();
-           
         }
     }
     ifsNomina.close();
 
-     return resultado = datosSalida;
+    return resultado = datosSalida;
 }
 
-string Planilla::calcularPagoPorHorasTrabajadas(int idE, int idS)
+string Planilla::calcularPagoPorHorasTrabajadas(int idE, int idS, string nombreE, string apellidoE)
 {
     idEmpleadoPersonas = idE;
-    idSupervisor=idS;
+    idSupervisor = idS;
+    nombre=nombreE;
+    apellido=apellidoE;
     std::ifstream ifsHorasTrabajadas("HorasTrabajadas.txt", std::ifstream::in);
     /* if (!ifsHorasTrabajadas.is_open())
                     {
@@ -198,13 +200,13 @@ string Planilla::calcularPagoPorHorasTrabajadas(int idE, int idS)
 
             //Monto neto a pagar
             montoAPagarPlanilla = montoPorHora * horasLaboradas;
-            impuestosPlanilla=0;
+            impuestosPlanilla = 0;
 
             //Buscar nombre de supervisor
 
             std::ifstream ifsNombreDeSupervisor("Personas.txt", std::ifstream::in);
 
-           /* if (!ifsNombreDeSupervisor.is_open())
+            /* if (!ifsNombreDeSupervisor.is_open())
             {
                 std::cerr << "Error leyendo archivo Personas.txt" << std::endl;
                 return -1;
@@ -231,8 +233,9 @@ string Planilla::calcularPagoPorHorasTrabajadas(int idE, int idS)
                     tipoEmpleadoSupervisor = 0;
 
                     stream4 >> idEmpleadoSupervisor >> nombreSupervisor >> apellidoSupervisor >> correoSupervisor >> tipoEmpleadoSupervisor >> idEmpleadoSupervisor;
-
-                    datosSalida = idEmpleadoPersonas + "," + nombre + "," + apellido + "," + nombreSupervisor + "," + apellidoSupervisor + "," + to_string(montoAPagarPlanilla)+" "+to_string(idEmpleadoPersonas)+" "+to_string(idSupervisor)+" "+to_string(impuestosPlanilla);
+                    datosSalida = "";
+                    datosSalida = to_string(idEmpleadoPersonas) + " " + nombre + " " + apellido + " " + nombreSupervisor + " " + apellidoSupervisor + " " + to_string(montoAPagarPlanilla) + " " + to_string(idEmpleadoPersonas) + " " + to_string(idSupervisor) + " " + to_string(impuestosPlanilla);
+                    
                 }
                 catch (string &excepcion)
                 {

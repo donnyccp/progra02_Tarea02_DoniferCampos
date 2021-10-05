@@ -38,8 +38,8 @@ class Planilla {
     Planilla();
 
     string calcularPlanillaPago(string linea);
-    string calcularPagoPorNomina(int idEmpleado, int idSupervisor);
-    string calcularPagoPorHorasTrabajadas(int idEmpleado, int idSupervisor);
+    string calcularPagoPorNomina(int idEmpleado, int idSupervisor, string nombreEmpleado, string apellidoEmpleado);
+    string calcularPagoPorHorasTrabajadas(int idEmpleado, int idSupervisor, string nombreEmpleado, string apellidoEmpleado);
     
     //std::string ObtenerResultado();
 };
