@@ -36,6 +36,7 @@ int main()
 
     //Crear arbol
     Arbol *arbol = new Arbol();
+
     Planilla planillita;
 
     //Abrir archivo personas
@@ -50,28 +51,27 @@ int main()
     {
 
         datosSalida = "";
-        apellidoSupervisor="";
-        idEmpleadoPersonas=0;
-        impuestosEmpleado=0.0;
-        montoAPagarEmpleado=0.0;
+        apellidoSupervisor = "";
+        idEmpleadoPersonas = 0;
+        impuestosEmpleado = 0.0;
+        montoAPagarEmpleado = 0.0;
         datosSalida = planillita.calcularPlanillaPago(lineaPersonas);
-       
+
         std::istringstream ss(datosSalida);
         ss >> idEmpleadoPersonas >> nombre >> apellido >> nombreSupervisor >> apellidoSupervisor >> montoAPagarEmpleado >> idEmpleadoPersonas >> idSupervisor >> impuestosEmpleado;
-        
 
         //Calculo subtotal y totales
         subtotal = subtotal + montoAPagarEmpleado;
         impuestos = impuestos + impuestosEmpleado;
         total = subtotal + impuestos;
         myFile << nombre << "," << apellido << "," << nombreSupervisor << "," << apellidoSupervisor << "," << montoAPagarEmpleado << endl;
-        
+
         arbol->AgregarNodo(idEmpleadoPersonas, idEmpleadoPersonas, idSupervisor);
 
         datosSalida = "";
     }
 
-    //
+    //Agregar subtotal, impuestos y total al archivo csv
 
     myFile << "Subtotal:" << subtotal << endl;
     myFile << "Impuestos:" << impuestos << endl;
@@ -80,7 +80,7 @@ int main()
     myFile.close();
 
     ifsPersonas.close();
-
+//Imprimir arbol relacion empleado y surpervisor
     std::cout << *arbol;
     delete arbol;
 

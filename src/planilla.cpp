@@ -32,6 +32,7 @@ Planilla::Planilla()
     impuestosPlanilla = 0.0;
 }
 
+//Calcula el pago de empleado si esta en planilla o es por horas
 string Planilla::calcularPlanillaPago(string linea)
 {
     try
@@ -53,11 +54,7 @@ string Planilla::calcularPlanillaPago(string linea)
             // Revisar si es  el director
 
             std::ifstream ifsNomina("Nomina.txt", std::ifstream::in);
-            /* if (!ifsNomina.is_open())
-            {
-                std::cerr << "Error leyendo archivo Nomina.txt" << std::endl;
-                return -1;
-            }*/
+          
 
             while (std::getline(ifsNomina, lineaNomina))
             {
@@ -101,6 +98,7 @@ string Planilla::calcularPlanillaPago(string linea)
     return resultado = datosSalida;
 }
 
+//Calcula el pago de planilla de un empleado en nomina
 string Planilla::calcularPagoPorNomina(int idE, int idS, string nombreE, string apellidoE)
 {
     idEmpleadoPersonas = idE;
@@ -110,11 +108,7 @@ string Planilla::calcularPagoPorNomina(int idE, int idS, string nombreE, string 
 
     std::ifstream ifsNomina("Nomina.txt", std::ifstream::in);
 
-    /* if (!ifsNomina.is_open())
-    {
-        std::cerr << "Error leyendo archivo Nomina.txt" << std::endl;
-        return -1;
-    }*/
+ 
     while (std::getline(ifsNomina, lineaNomina))
     {
         std::istringstream stream2(lineaNomina);
@@ -133,11 +127,7 @@ string Planilla::calcularPagoPorNomina(int idE, int idS, string nombreE, string 
 
             std::ifstream ifsNombreDeSupervisor("Personas.txt", std::ifstream::in);
 
-            /*  if (!ifsNombreDeSupervisor.is_open())
-            {
-                std::cerr << "Error leyendo archivo Personas.txt" << std::endl;
-                return -1;
-            }*/
+            
             string lineaNombreSupervisor{""};
             string nombreCompletoSupervisor{""};
             int idEmpleadoSupervisor{0};
@@ -177,6 +167,7 @@ string Planilla::calcularPagoPorNomina(int idE, int idS, string nombreE, string 
     return resultado = datosSalida;
 }
 
+//Calcula el pago de planilla de un empleado que trabajo por horas
 string Planilla::calcularPagoPorHorasTrabajadas(int idE, int idS, string nombreE, string apellidoE)
 {
     idEmpleadoPersonas = idE;
@@ -184,11 +175,7 @@ string Planilla::calcularPagoPorHorasTrabajadas(int idE, int idS, string nombreE
     nombre=nombreE;
     apellido=apellidoE;
     std::ifstream ifsHorasTrabajadas("HorasTrabajadas.txt", std::ifstream::in);
-    /* if (!ifsHorasTrabajadas.is_open())
-                    {
-                        std::cerr << "Error leyendo archivo HorasTrabajadas.txt" << std::endl;
-                        return -1;
-                    }*/
+ 
     while (std::getline(ifsHorasTrabajadas, lineaHorasTrabajadas) && idEmpleadoPersonas != idEmpleadoHorasTrabajadas)
     {
         std::istringstream stream3(lineaHorasTrabajadas);
@@ -206,11 +193,7 @@ string Planilla::calcularPagoPorHorasTrabajadas(int idE, int idS, string nombreE
 
             std::ifstream ifsNombreDeSupervisor("Personas.txt", std::ifstream::in);
 
-            /* if (!ifsNombreDeSupervisor.is_open())
-            {
-                std::cerr << "Error leyendo archivo Personas.txt" << std::endl;
-                return -1;
-            }*/
+           
             string lineaNombreSupervisor{""};
             string nombreCompletoSupervisor{""};
             int idEmpleadoSupervisor{0};

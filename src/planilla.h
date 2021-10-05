@@ -41,7 +41,7 @@ class Planilla {
     string calcularPagoPorNomina(int idEmpleado, int idSupervisor, string nombreEmpleado, string apellidoEmpleado);
     string calcularPagoPorHorasTrabajadas(int idEmpleado, int idSupervisor, string nombreEmpleado, string apellidoEmpleado);
     
-    //std::string ObtenerResultado();
+    
 };
 
 #endif
