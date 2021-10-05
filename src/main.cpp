@@ -64,8 +64,9 @@ int main()
         subtotal = subtotal + montoAPagarEmpleado;
         impuestos = impuestos + impuestosEmpleado;
         total = subtotal + impuestos;
+        //Ingresar datos en .csv
         myFile << nombre << "," << apellido << "," << nombreSupervisor << "," << apellidoSupervisor << "," << montoAPagarEmpleado << endl;
-
+        //Agregar nodo
         arbol->AgregarNodo(idEmpleadoPersonas, idEmpleadoPersonas, idSupervisor);
 
         datosSalida = "";
@@ -78,9 +79,9 @@ int main()
     myFile << "Total:" << total << endl;
 
     myFile.close();
-
     ifsPersonas.close();
-//Imprimir arbol relacion empleado y surpervisor
+
+    //Imprimir arbol relacion empleado y surpervisor
     std::cout << *arbol;
     delete arbol;
 
